@@ -1,6 +1,6 @@
 import _ from 'underscore';
 // import { crearDeck as crearNuevoDeck } from './usecases/crear-deck';
-import { crearDeck } from './usecases/crear-deck';
+import { pedirCarta, crearDeck, valorCarta } from './usecases';
 
 const miModulo = (() => {
   "use strict";
@@ -34,21 +34,6 @@ const miModulo = (() => {
     btnPedir.disabled = false;
     btnDetener.disabled = false;
   }
-
-  
-
-  //Esta funcion me permite tomar una carta
-  const pedirCarta = () => {
-    if (deck.length == 0) {
-      throw "No hay Cartas en el Deck";
-    }
-    return deck.pop();
-  };
-
-  const valorCarta = (carta) => {
-    const valor = carta.substring(0, carta.length - 1);
-    return isNaN(valor) ? (valor === "A" ? 11 : 10) : parseInt(valor);
-  };
 
 
   // Turno: 0 = Primer Jugador y el ultimo sera la computadora
@@ -86,7 +71,7 @@ const miModulo = (() => {
   const turnoComputadora = (puntosMinimos) => {
     let puntosComputadora = 0;
     do {
-      const carta = pedirCarta();
+      const carta = pedirCarta( deck );
 
       puntosComputadora = acumularPuntos(carta, puntosJugadores.length - 1);
 
@@ -100,7 +85,7 @@ const miModulo = (() => {
 
   //Eventos
   btnPedir.addEventListener("click", function () {
-    const carta = pedirCarta();
+    const carta = pedirCarta( deck );
 
     const puntosJugador = acumularPuntos( carta, 0)
 
